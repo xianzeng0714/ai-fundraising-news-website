@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Archive - AI Fundraising News</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .news-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .filter-dropdown {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-dropdown:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .news-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .news-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 1.5rem;
+        }
+        
+        .news-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .news-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+        
+        .news-title a:hover {
+            color: var(--primary-color);
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #777;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .news-source {
+            font-weight: 500;
+        }
+        
+        .news-date {
+            color: #999;
+        }
+        
+        .news-snippet {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+        
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        
+        .pagination button:hover, .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--secondary-color);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .news-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">AI Fundraising News</a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news_archive.html">News Archive</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger">☰</button>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1 class="page-title">News Archive</h1>
+        
+        <div class="news-filter">
+            <div class="search-box">
+                <i>🔍</i>
+                <input type="text" id="searchInput" placeholder="Search news articles...">
+            </div>
+            <select class="filter-dropdown" id="timeFilter">
+                <option value="all">All Time</option>
+                <option value="day">Past Day</option>
+                <option value="week">Past Week</option>
+                <option value="month">Past Month</option>
+            </select>
+        </div>
+        
+        <div class="news-list" id="newsList">
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-3" target="_blank">Tombot fetches $6M for robotic pet — Fierce Fundraising Tracker</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Fierce Healthcare</span>
+                    <span class="news-date">3 days ago</span>
+                </div>
+                <p class="news-snippet">Recent funding rounds include Handspring Health securing $12 million for youth mental health and Tombot's $6.1 million raise for robotic pets.</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://www.businessobserverfl.com/news/2025/jul/01/naples-software-firm-ai-nonprofits-strategize/" target="_blank">Naples software firm uses AI to help nonprofits fundraise, strategize</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Business Observer</span>
+                    <span class="news-date">4 days ago</span>
+                </div>
+                <p class="news-snippet">PlanPerfect helps nonprofits focus, with an assist from artificial intelligence, on a key task: developing and utilizing a robust strategic plan.</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://www.investors.com/news/technology/artificial-intelligence-stocks/" target="_blank">AI Stocks Face 'Show Me' Moment. Nvidia Roars Back.</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Investor's Business Daily</span>
+                    <span class="news-date">1 week ago</span>
+                </div>
+                <p class="news-snippet">The landscape of top artificial intelligence stocks continues to evolve with investors focused on new plays such as CoreWeave (CRWV).</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://phys.org/news/2025-06-ethical-barrier-ai-tools-fundraising.html" target="_blank">Ethical concerns a barrier to use of AI tools in fundraising, new report shows</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Phys.org</span>
+                    <span class="news-date">2 weeks ago</span>
+                </div>
+                <p class="news-snippet">A new report has revealed that fundraisers have concerns around the ethical implications of artificial intelligence (AI) in their work with donors.</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://finance.yahoo.com/news/ai-startup-anysphere-fields-vc-010417332.html" target="_blank">AI Startup Anysphere Fields VC Offers at Over $18 Billion Valuation</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Yahoo Finance</span>
+                    <span class="news-date">2 weeks ago</span>
+                </div>
+                <p class="news-snippet">(Bloomberg) -- Anysphere Inc., the developer of the popular artificial intelligence code editor Cursor, has been approached by investors about a deal that...</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://www.reuters.com/business/musks-xai-talks-raise-43-billion-equity-funding-bloomberg-news-reports-2025-06-17/" target="_blank">Musk's xAI in talks for $4.3 billion equity funding, Bloomberg News reports</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Reuters</span>
+                    <span class="news-date">2 weeks ago</span>
+                </div>
+                <p class="news-snippet">Elon Musk's artificial intelligence startup xAI is in talks to raise $4.3 billion through an equity investment on top of its $5 billion debt funding plans,...</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://techcrunch.com/2025/06/18/here-are-the-24-us-ai-startups-that-have-raised-100m-or-more-in-2025/" target="_blank">Here are the 24 US AI startups that have raised $100M or more in 2025</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">TechCrunch</span>
+                    <span class="news-date">2 weeks ago</span>
+                </div>
+                <p class="news-snippet">U.S.-based AI startups continue to rake in venture funding with multiple companies already raising impressive rounds in 2025.</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://www.cleveland.com/news/2025/06/ai-fundraiser-at-cleveland-state-meet-ava-the-virtual-engagement-officer.html" target="_blank">AI fundraiser at Cleveland State: Meet Ava, the virtual engagement officer</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Cleveland.com</span>
+                    <span class="news-date">2 weeks ago</span>
+                </div>
+                <p class="news-snippet">The university's virtual engagement officer named Ava texts and emails 1000 CSU friends, hoping to get them reengaged.</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://techfundingnews.com/mistral-eyes-a-1b-fundraise-can-frances-ai-unicorn-outpace-openai-anthropic-and-google/" target="_blank">Mistral eyes a $1B fundraise. Can France's AI unicorn outpace OpenAI, Anthropic, and Google?</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">Tech Funding News</span>
+                    <span class="news-date">4 weeks ago</span>
+                </div>
+                <p class="news-snippet">French AI unicorn Mistral is planning a $1B fundraising round to accelerate its growth and challenge global leaders like OpenAI, Anthropic, and Google's...</p>
+            </div>
+            
+            <div class="news-item">
+                <h2 class="news-title"><a href="https://pitchbook.com/news/articles/meta-scale-ai-investment-10b-corporate-venture-deals" target="_blank">Meta's $10B bet on Scale AI highlights a trend: CVCs now account for nearly 75% of AI VC investment</a></h2>
+                <div class="news-meta">
+                    <span class="news-source">PitchBook</span>
+                    <span class="news-date">4 weeks ago</span>
+                </div>
+                <p class="news-snippet">Social media giant Meta is in talks to invest around $10 billion into the data labeling startup Scale AI, Bloomberg reported. It would be the latest big...</p>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next →</button>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>AI Fundraising News provides the latest updates on AI startups, funding rounds, and technological advancements in the artificial intelligence space.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="news_archive.html">News Archive</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Subscribe</h3>
+                    <p>Stay updated with our newsletter</p>
+                    <form>
+                        <input type="email" placeholder="Enter your email" style="padding: 0.5rem; width: 100%; margin-top: 0.5rem;">
+                        <button type="submit" style="background-color: var(--primary-color); color: white; border: none; padding: 0.5rem; margin-top: 0.5rem; cursor: pointer; width: 100%;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 AI Fundraising News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const newsItems = document.querySelectorAll('.news-item');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            newsItems.forEach(item => {
+                const title = item.querySelector('.news-title').textContent.toLowerCase();
+                const snippet = item.querySelector('.news-snippet').textContent.toLowerCase();
+                const source = item.querySelector('.news-source').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || snippet.includes(searchTerm) || source.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        
+        // Time filter functionality
+        const timeFilter = document.getElementById('timeFilter');
+        
+        timeFilter.addEventListener('change', function() {
+            const filterValue = this.value;
+            
+            newsItems.forEach(item => {
+                const dateText = item.querySelector('.news-date').textContent;
+                
+                if (filterValue === 'all') {
+                    item.style.display = 'block';
+                } else if (filterValue === 'day' && (dateText.includes('day') || dateText.includes('hours'))) {
+                    item.style.display = 'block';
+                } else if (filterValue === 'week' && (dateText.includes('day') || dateText.includes('week') || dateText.includes('hours'))) {
+                    item.style.display = 'block';
+                } else if (filterValue === 'month' && (dateText.includes('day') || dateText.includes('week') || dateText.includes('month') || dateText.includes('hours'))) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        
+        // Pagination functionality
+        const paginationButtons = document.querySelectorAll('.pagination button');
+        
+        paginationButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                paginationButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // In a real application, this would load different news items
+                // For this demo, we'll just scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
