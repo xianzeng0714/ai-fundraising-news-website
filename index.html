@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Funding Pulse - Your Source for AI Fundraising News</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: var(--light-color);
+        }
+        
+        .logo p {
+            font-size: 1rem;
+            color: var(--light-color);
+            opacity: 0.8;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        nav a.active {
+            background-color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .intro {
+            padding: 60px 0;
+            text-align: center;
+            background-color: var(--light-color);
+        }
+        
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        .featured-news {
+            padding: 60px 0;
+        }
+        
+        .featured-news h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--secondary-color);
+            position: relative;
+        }
+        
+        .featured-news h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            height: 180px;
+            background-color: var(--primary-color);
+            background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .card-source {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .card-link {
+            margin-top: auto;
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .card-link:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .stats-section {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .stats-section h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-top: 40px;
+            position: relative;
+        }
+        
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            background-color: var(--primary-color);
+            transition: height 1s ease-in-out;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -30px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 20px;
+            }
+            
+            nav {
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                display: none;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>AI Funding Pulse</h1>
+                    <p>Your Source for the Latest in AI Venture Capital and Fundraising</p>
+                </div>
+                <button class="hamburger" id="hamburger">☰</button>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">News Archive</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="intro">
+        <div class="container">
+            <h2>Welcome to AI Funding Pulse</h2>
+            <p>Stay informed with the latest news and insights on AI fundraising, venture capital trends, and the impact of artificial intelligence on the investment landscape. Our dedicated team tracks the most significant developments in AI funding to keep you ahead of the curve in this rapidly evolving sector.</p>
+        </div>
+    </section>
+
+    <section class="featured-news">
+        <div class="container">
+            <h2>Latest Headlines</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="card-img">
+                        <i class="icon">📈</i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Here are the 24 US AI startups that have raised $100M or more in 2025</h3>
+                        <p class="card-source">Source: TechCrunch</p>
+                        <a href="https://techcrunch.com/2025/06/18/here-are-the-24-us-ai-startups-that-have-raised-100m-or-more-in-2025/" class="card-link" target="_blank">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-img">
+                        <i class="icon">🚀</i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Musk's xAI in talks for $4.3 billion equity funding, Bloomberg News reports</h3>
+                        <p class="card-source">Source: Reuters</p>
+                        <a href="https://www.reuters.com/business/musks-xai-talks-raise-43-billion-equity-funding-bloomberg-news-reports-2025-06-17/" class="card-link" target="_blank">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-img">
+                        <i class="icon">💰</i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">AI Startup Anysphere Fields VC Offers at Over $18 Billion Valuation</h3>
+                        <p class="card-source">Source: Yahoo Finance</p>
+                        <a href="https://finance.yahoo.com/news/ai-startup-anysphere-fields-vc-010417332.html" class="card-link" target="_blank">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-img">
+                        <i class="icon">🤝</i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Naples software firm uses AI to help nonprofits fundraise, strategize</h3>
+                        <p class="card-source">Source: Business Observer</p>
+                        <a href="https://www.businessobserverfl.com/news/2025/jul/01/naples-software-firm-ai-nonprofits-strategize/" class="card-link" target="_blank">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-img">
+                        <i class="icon">📊</i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Meta's $10B bet on Scale AI highlights a trend: CVCs now account for nearly 75% of AI VC investment</h3>
+                        <p class="card-source">Source: PitchBook</p>
+                        <a href="https://pitchbook.com/news/articles/meta-scale-ai-investment-10b-corporate-venture-deals" class="card-link" target="_blank">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <h2>AI Funding Trends in 2025</h2>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="stat1">0</div>
+                    <div class="stat-label">Billion $ in AI Funding</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat2">0</div>
+                    <div class="stat-label">AI Startups Funded</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat3">0</div>
+                    <div class="stat-label">Average Deal Size (M$)</div>
+                </div>
+            </div>
+            
+            <div class="chart-container" id="chart">
+                <div class="bar" id="bar1" style="left: 10%;">
+                    <div class="bar-label">Q1</div>
+                </div>
+                <div class="bar" id="bar2" style="left: 30%;">
+                    <div class="bar-label">Q2</div>
+                </div>
+                <div class="bar" id="bar3" style="left: 50%;">
+                    <div class="bar-label">Q3</div>
+                </div>
+                <div class="bar" id="bar4" style="left: 70%;">
+                    <div class="bar-label">Q4</div>
+                </div>
+                <div class="bar" id="bar5" style="left: 90%;">
+                    <div class="bar-label">Projected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Funding Pulse. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('show');
+        });
+        
+        // Animate stats
+        function animateStats() {
+            const stat1 = document.getElementById('stat1');
+            const stat2 = document.getElementById('stat2');
+            const stat3 = document.getElementById('stat3');
+            
+            let count1 = 0;
+            let count2 = 0;
+            let count3 = 0;
+            
+            const target1 = 142;
+            const target2 = 856;
+            const target3 = 75;
+            
+            const duration = 2000; // 2 seconds
+            const interval = 20; // Update every 20ms
+            
+            const steps1 = Math.ceil(target1 / (duration / interval));
+            const steps2 = Math.ceil(target2 / (duration / interval));
+            const steps3 = Math.ceil(target3 / (duration / interval));
+            
+            const timer = setInterval(() => {
+                count1 += steps1;
+                count2 += steps2;
+                count3 += steps3;
+                
+                if (count1 >= target1) {
+                    count1 = target1;
+                }
+                if (count2 >= target2) {
+                    count2 = target2;
+                }
+                if (count3 >= target3) {
+                    count3 = target3;
+                }
+                
+                stat1.textContent = count1;
+                stat2.textContent = count2;
+                stat3.textContent = count3;
+                
+                if (count1 === target1 && count2 === target2 && count3 === target3) {
+                    clearInterval(timer);
+                }
+            }, interval);
+        }
+        
+        // Animate chart
+        function animateChart() {
+            const bars = [
+                { id: 'bar1', height: 120 },
+                { id: 'bar2', height: 180 },
+                { id: 'bar3', height: 150 },
+                { id: 'bar4', height: 220 },
+                { id: 'bar5', height: 250 }
+            ];
+            
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    document.getElementById(bar.id).style.height = bar.height + 'px';
+                }, index * 200);
+            });
+        }
+        
+        // Check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        
+        // Trigger animations when elements come into view
+        let statsAnimated = false;
+        let chartAnimated = false;
+        
+        window.addEventListener('scroll', () => {
+            const statsSection = document.querySelector('.stats-section');
+            const chartContainer = document.getElementById('chart');
+            
+            if (!statsAnimated && isInViewport(statsSection)) {
+                animateStats();
+                statsAnimated = true;
+            }
+            
+            if (!chartAnimated && isInViewport(chartContainer)) {
+                animateChart();
+                chartAnimated = true;
+            }
+        });
+        
+        // Initial check on page load
+        window.addEventListener('load', () => {
+            const statsSection = document.querySelector('.stats-section');
+            const chartContainer = document.getElementById('chart');
+            
+            if (isInViewport(statsSection)) {
+                animateStats();
+                statsAnimated = true;
+            }
+            
+            if (isInViewport(chartContainer)) {
+                animateChart();
+                chartAnimated = true;
+            }
+        });
+    </script>
+</body>
+</html>
