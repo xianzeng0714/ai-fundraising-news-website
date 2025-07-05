@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Fundraising Nexus</title>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c757d;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #4a6bff 0%, #6b8cff 100%);
+            color: white;
+            text-align: center;
+            padding: 120px 0 80px;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .about-image img:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .mission {
+            background-color: white;
+        }
+
+        .mission-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .mission-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .stats {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .stat-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-item:hover .stat-number {
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            margin-top: 40px;
+            height: 300px;
+            position: relative;
+        }
+
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            background: linear-gradient(to top, #4a6bff, #6b8cff);
+            border-radius: 5px 5px 0 0;
+            transition: var(--transition);
+        }
+
+        .bar:hover {
+            background: linear-gradient(to top, #ff6b6b, #ff9e9e);
+            transform: scaleY(1.05);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .bar:hover .bar-value {
+            opacity: 1;
+        }
+
+        .contact {
+            background-color: var(--light-color);
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .contact-info-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .about-content, .mission-content, .contact-content {
+                flex-direction: column;
+            }
+
+            .about-image {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i>🤖</i> AI Fundraising Nexus
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Trends</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <button class="hamburger">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>About AI Fundraising Nexus</h1>
+            <p>Your premier source for the latest news, trends, and analysis in the world of AI fundraising.</p>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>AI Fundraising Nexus is your premier source for the latest news, trends, and analysis in the world of AI fundraising. We are dedicated to providing timely and insightful coverage of venture capital, startup funding, and the impact of artificial intelligence on the fundraising landscape.</p>
+                    <p>Founded in 2023, our team of experts combines deep knowledge of artificial intelligence with extensive experience in finance and investment. We track the pulse of the AI funding ecosystem, bringing you comprehensive reports, exclusive interviews, and data-driven insights.</p>
+                    <p>Whether you're an investor looking for the next big opportunity, an entrepreneur seeking funding strategies, or simply an enthusiast following the AI revolution, AI Fundraising Nexus is your trusted companion in navigating this dynamic landscape.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://source.unsplash.com/random/600x400/?ai,technology" alt="AI Technology">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Mission</h2>
+            </div>
+            <div class="mission-content">
+                <div class="mission-text">
+                    <p>Our mission is to empower investors, entrepreneurs, and enthusiasts with the critical information they need to navigate the rapidly evolving intersection of AI and finance. We believe in the transformative power of AI and aim to chronicle its journey through the lens of investment and innovation.</p>
+                    <p>We strive to:</p>
+                    <ul>
+                        <li>Provide accurate, timely, and actionable information about AI funding trends</li>
+                        <li>Highlight emerging opportunities in the AI investment landscape</li>
+                        <li>Foster connections between innovators and capital providers</li>
+                        <li>Promote responsible and ethical AI development through informed investment</li>
+                        <li>Democratize access to AI funding knowledge for entrepreneurs worldwide</li>
+                    </ul>
+                </div>
+                <div class="stats">
+                    <h3>AI Funding Growth</h3>
+                    <div class="stat-container">
+                        <div class="stat-item">
+                            <div class="stat-number">$93B</div>
+                            <div class="stat-label">Global AI Funding 2023</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">42%</div>
+                            <div class="stat-label">YoY Growth</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">3,500+</div>
+                            <div class="stat-label">AI Startups Funded</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$12M</div>
+                            <div class="stat-label">Average Series A</div>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="funding-chart">
+                        <!-- Chart will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-info-item">
+                        <i>📍</i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 AI Boulevard, Innovation District, San Francisco, CA 94105</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i>📧</i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@aifundraisingnexus.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i>📱</i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">f</a>
+                        <a href="#" class="social-link">t</a>
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">ig</a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI Fundraising Nexus</h3>
+                    <p>Your premier source for AI funding news, trends, and analysis.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Trends</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">AI Funding Database</a></li>
+                        <li><a href="#">Investor Directory</a></li>
+                        <li><a href="#">Startup Toolkit</a></li>
+                        <li><a href="#">Research Reports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest updates.</p>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your email address">
+                        </div>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI Fundraising Nexus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Funding Chart Data
+        const chartData = [
+            { year: '2018', value: 28 },
+            { year: '2019', value: 37 },
+            { year: '2020', value: 45 },
+            { year: '2021', value: 65 },
+            { year: '2022', value: 82 },
+            { year: '2023', value: 93 }
+        ];
+
+        // Create Funding Chart
+        function createFundingChart() {
+            const chartContainer = document.getElementById('funding-chart');
+            const maxValue = Math.max(...chartData.map(item => item.value));
+            const containerWidth = chartContainer.offsetWidth;
+            const barWidth = Math.min(40, (containerWidth / chartData.length) - 20);
+            
+            chartData.forEach((item, index) => {
+                const barHeight = (item.value / maxValue) * 250;
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = `${barHeight}px`;
+                bar.style.left = `${index * (containerWidth / chartData.length) + (containerWidth / chartData.length - barWidth) / 2}px`;
+                bar.style.width = `${barWidth}px`;
+                
+                const barLabel = document.createElement('div');
+                barLabel.className = 'bar-label';
+                barLabel.textContent = item.year;
+                
+                const barValue = document.createElement('div');
+                barValue.className = 'bar-value';
+                barValue.textContent = `$${item.value}B`;
+                
+                bar.appendChild(barLabel);
+                bar.appendChild(barValue);
+                chartContainer.appendChild(bar);
+            });
+        }
+
+        // Form Submission
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            const formValues = Object.fromEntries(formData.entries());
+            
+            // In a real application, you would send this data to a server
+            console.log('Form submitted:', formValues);
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createFundingChart();
+            
+            // Animate stats on scroll
+            const statItems = document.querySelectorAll('.stat-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            statItems.forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+
+        // Resize event for responsive chart
+        window.addEventListener('resize', function() {
+            const chartContainer = document.getElementById('funding-chart');
+            chartContainer.innerHTML = '';
+            createFundingChart();
+        });
+    </script>
+</body>
+</html>
